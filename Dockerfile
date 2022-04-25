@@ -1,19 +1,18 @@
-FROM       ubuntu:16.04
-MAINTAINER Asif Hisam "https://github.com/ks32"
+FROM       ubuntu:18.04
+MAINTAINER finogeeks "https://www.finclip.com"
 
 RUN apt-get update
 
 RUN apt-get install -y openssh-server git vim nano software-properties-common python screen sudo locales software-properties-common whiptail bzip2
 RUN mkdir /var/run/sshd
 
-# RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /src/depot_tools
-# copy old depot_toos instead of latest
-ADD depot_tools.tgz /src/
+RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /src/depot_tools
 
 ENV PATH "$PATH:/src/depot_tools"
 ENV DEPOT_TOOLS_UPDATE "0"
-RUN git config --global user.name "Asif Hisam" && \
-    git config --global user.email "asif@email.com" && \
+ENV XWALK_OS_ANDROID 1
+RUN git config --global user.name "finogeeks" && \
+    git config --global user.email "contact@finogeeks.com" && \
     git config --global core.autocrlf false && \
     git config --global core.filemode false && \
     git config --global color.ui true
@@ -33,4 +32,4 @@ ADD set /root/set
 
 EXPOSE 22
 
-CMD    ["/usr/sbin/sshd", "-D"]
+CMD  ["/usr/sbin/sshd", "-D"]
