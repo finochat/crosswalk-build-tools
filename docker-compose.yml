@@ -1,0 +1,14 @@
+services:
+  crosswalk:
+    image: docker.finogeeks.club/build/crosswalk-build
+    restart: always
+    command: tail -f /root/.bashrc
+    environment:
+      XWALK_OS_ANDROID: 1
+    logging:
+      options:
+        max-size: 64m
+        max-file: '5'
+      driver: json-file
+    volumes:
+      - '/root/crosswalk:/root/crosswalk'
